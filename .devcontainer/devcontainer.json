@@ -1,22 +1,28 @@
 {
-    "name": "EXLA Devcontainer",
-    "build": {
+  "name": "EXLA Devcontainer",
+  "build": {
       "dockerfile": "Dockerfile"
-    },
-    "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
-    },
-    "extensions": [
-      "ms-azuretools.vscode-docker",
-      "eamodio.gitlens"
-    ],
-    "postCreateCommand": "mix deps.get && mix compile",
-    "remoteEnv": {
-      "EXLA_FORCE_REBUILD": "true"
-    },
-    "mounts": [
+  },
+  "customizations": {
+      "vscode": {
+          "extensions": [
+              "jakebecker.elixir-ls",
+              "vscodevim.vim",
+              "ms-azuretools.vscode-docker",
+              "eamodio.gitlens"
+          ],
+          "settings": {
+              "terminal.integrated.shell.linux": "/bin/bash"
+          }
+      }
+  },
+  "postCreateCommand": "mix local.hex --force && mix local.rebar --force && mix deps.get && mix compile",
+  "remoteEnv": {
+      "EXLA_FORCE_REBUILD": "true",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  },
+  "mounts": [
       "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
-    ],
-    "workspaceFolder": "/workspace"
-  }
-  
+  ],
+  "workspaceFolder": "/workspace"
+}
