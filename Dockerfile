@@ -3,8 +3,9 @@ FROM elixir:latest
 
 # Install build dependencies
 RUN apt-get update && \
-    apt-get install -y build-essential && \
-    apt-get clean
+    apt-get install -y build-essential git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Hex + Rebar
 RUN mix local.hex --force && \
@@ -16,4 +17,5 @@ WORKDIR /workspace
 # Set environment variables
 ENV EXLA_FORCE_REBUILD=true
 
-# The rest will be handled by devcontainer.json
+# Copy the project files into the container
+COPY . .
